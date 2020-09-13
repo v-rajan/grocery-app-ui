@@ -1,27 +1,61 @@
-# GroceryAppUi
+Voting app build with Angluar and PrimeNG to be deployed on Kubernetes.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.1.
+[Angluar](https://angular.io/)
 
-## Development server
+[PrimeNG](https://www.primefaces.org/primeng/)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+# Prerequites
+* Node.js
+* Docker
+* kubectl for Kubernetes deployment
 
-## Code scaffolding
+# Tools
+* [LENS : Kubernetes IDE](https://k8slens.dev/)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+# Setup
+### Build
+```console
+npm install
+```
+### Start Server
 
-## Build
+```console
+ng serve --watch
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+# Docker
+[grocery-app-ui](https://hub.docker.com/repository/docker/vrajan/grocery-app-ui)
+## Start Server
+```console
+docker run  -t \
+    --name grocery-app-ui \
+    -p 80:8080 \
+    vrajan/grocery-app-ui:latest
+````
+# kubernetes
+ 
+## Install
+```console
+kubectl create  -f k8s/kubernetes.yml
+serviceaccount/grocery-app-ui created
+service/grocery-app-ui created
+deployment.apps/grocery-app-ui created
 
-## Running unit tests
+NAME                              READY   STATUS    RESTARTS   AGE
+grocery-app-ui-7fc8b6f44c-pzfvn   1/1     Running   0          18s
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+kubectl get svc
+NAME             TYPE           CLUSTER-IP      EXTERNAL-IP      PORT(S)                         AGE
+grocery-app-ui   LoadBalancer   10.158.13.239   34.227.94.113    80:30788/TCP                    89s
 
-## Running end-to-end tests
+kubectl get deployment
+NAME             READY   UP-TO-DATE   AVAILABLE   AGE
+grocery-app-ui   1/1     1            1           65s
+````
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+# Testing
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+### Web test
+```console
+http://34.227.94.113
+```   

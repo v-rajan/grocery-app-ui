@@ -1,0 +1,15 @@
+<ul>
+    <li class="container" *ngFor="let product of products; let i=index">
+        <p-toolbar>
+            <div class="p-toolbar-group-left">
+                <p>{{product.name}}</p>
+            </div>
+            <div class="p-toolbar-group-centre">
+                <p>Votes: {{product.votes}}</p>
+                <button pButton type="button" icon="pi pi-thumbs-up" iconPos="left" (click)="thumbsUp(i)"></button>
+                &nbsp;
+                <button pButton type="button" icon="pi pi-thumbs-down" iconPos="left" (click)="thumbsDown(i)"></button>
+            </div>
+        </p-toolbar>
+    </li>
+</ul>

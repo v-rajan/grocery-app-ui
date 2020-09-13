@@ -3,14 +3,21 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { GroceryComponent } from './grocery/grocery.component';
+
+import { ToolbarModule } from 'primeng/toolbar';
+import { ButtonModule } from 'primeng/button';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    GroceryComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ToolbarModule,
+    ButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

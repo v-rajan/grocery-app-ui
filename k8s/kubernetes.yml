@@ -1,0 +1,67 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    app.quarkus.io/vcs-url: https://github.com/v-rajan/grocery-app-ui.git
+  labels:
+    app.kubernetes.io/name: grocery-app-ui
+    app.kubernetes.io/version: latest
+  name: grocery-app-ui
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    app.quarkus.io/vcs-url: https://github.com/v-rajan/grocery-app-ui.git
+  labels:
+    app.kubernetes.io/name: grocery-app-ui
+    app.kubernetes.io/version: latest
+  name: grocery-app-ui
+spec:
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+  selector:
+    app.kubernetes.io/name: grocery-app-ui
+    app.kubernetes.io/version: latest
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    app.quarkus.io/vcs-url: https://github.com/v-rajan/grocery-app-ui.git
+  labels:
+    app.kubernetes.io/name: grocery-app-ui
+    app.kubernetes.io/version: latest
+  name: grocery-app-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: grocery-app-ui
+      app.kubernetes.io/version: latest
+  template:
+    metadata:
+      annotations:
+        app.quarkus.io/vcs-url: https://github.com/v-rajan/grocery-app-ui.git
+      labels:
+        app.kubernetes.io/name: grocery-app-ui
+        app.kubernetes.io/version: latest
+    spec:
+      containers:
+      - env:
+        - name: KUBERNETES_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        image: vrajan/grocery-app-ui:latest
+        imagePullPolicy: Always
+        name: grocery-app-ui
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+      serviceAccount: grocery-app-ui
